@@ -5,6 +5,7 @@ markx
 |nimble-version| |nimble-install| |gh-actions|
 
 markx selects execution targets with editor and executes commands.
+markx is inspired by `mmv <https://github.com/itchyny/mmv>`_
 
 .. contents:: Table of contents
 
