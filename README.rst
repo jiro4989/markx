@@ -7,6 +7,8 @@ markx
 markx selects execution targets with editor and executes commands.
 markx is inspired by `mmv <https://github.com/itchyny/mmv>`_
 
+|demo_1|
+
 .. contents:: Table of contents
 
 Usage
@@ -68,3 +70,4 @@ MIT
    :target: https://nimble.directory/ci/badges/markx/nimdevel/output.html
 .. |nimble-install| image:: https://nimble.directory/ci/badges/markx/nimdevel/status.svg
    :target: https://nimble.directory/ci/badges/markx/nimdevel/output.html
+.. |demo_1| image:: ./docs/demo_1.gif
