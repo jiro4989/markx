@@ -8,6 +8,7 @@ https://github.com/jiro4989/markx"""
 
 proc filterMarkedLines(marked, srcs: openArray[string]): seq[string] =
   for i, markedLine in marked:
+    if srcs.len <= i: return
     let line = srcs[i]
     if not markedLine.startsWith("x "): continue
     if markedLine.len - line.len != 2: continue
@@ -35,7 +36,7 @@ proc editTmpFile*(srcs: seq[string], editor: string): seq[string] =
 proc markx(srcs: seq[string]): int =
   let
     editor = "vim"
-    shell = "echo <{}>"
+    shell = "echo ここから{}ここまで"
     lines = readLinesFromStdin()
     marked = editTmpFile(lines, editor)
   execMarked(marked, lines, shell)
