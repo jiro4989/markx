@@ -47,7 +47,7 @@ You quit editor without save file if you want to stop executing commands.
 Examples
 ========
 
-See ``bin`` directory.
+See `bin <https://github.com/jiro4989/markx/tree/master/bin>`_ directory.
 
 Installation
 ============
