@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ $# -lt 1 ]; then
+  echo "need archive file name" >&2
+  exit 1
+fi
+
+ARCHIVE_FILE=$1
+shift
+
+markx -c 'echo {}' $@ | xargs tar czf "$ARCHIVE_FILE"
