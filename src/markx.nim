@@ -15,13 +15,15 @@ proc filterMarkedLines(marked, srcs: openArray[string]): seq[string] =
     if markedLine[2..^1] != line: continue
     result.add(line)
 
-proc execMarked(marked, srcs: openArray[string], shell: string) =
-  var shellArgs = filterMarkedLines(marked, srcs)
-  for arg in shellArgs:
-    let s = shell.replace("{}", arg)
+proc execMarked(marked, srcs: openArray[string], command: string) =
+  var args = filterMarkedLines(marked, srcs)
+  for arg in args:
+    let s = command.replace("{}", arg)
     discard execCmd(s)
 
-proc readLinesFromStdin: seq[string] =
+proc readLinesFromStdinOrArgs(args: seq[string]): seq[string] =
+  if 0 < args.len:
+    return args
   for line in stdin.lines:
     result.add(line)
 
@@ -33,13 +35,12 @@ proc editTmpFile*(srcs: seq[string], editor: string): seq[string] =
   discard execCmd(editor & " " & tmpfile)
   result = readFile(tmpfile).split("\n")
 
-proc markx(srcs: seq[string]): int =
+proc markx(editor = "vi", command: string, args: seq[string]): int =
   let
-    editor = "vim"
-    shell = "echo ここから{}ここまで"
-    lines = readLinesFromStdin()
+    editor = getEnv("EDITOR", default = editor)
+    lines = readLinesFromStdinOrArgs(args)
     marked = editTmpFile(lines, editor)
-  execMarked(marked, lines, shell)
+  execMarked(marked, lines, command)
 
 when isMainModule and not defined modeTest:
   import cligen
