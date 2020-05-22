@@ -1,6 +1,6 @@
 import unittest
 
-include APPNAME
+include markx
 
 suite "suite":
   test "test":
