@@ -2,7 +2,7 @@
 
 version       = "1.0.0"
 author        = "jiro4989"
-description   = "markx executes multiple lines or files with editor"
+description   = "markx selects execution targets with editor and executes commands."
 license       = "MIT"
 srcDir        = "src"
 bin           = @["markx"]

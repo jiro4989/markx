@@ -45,6 +45,7 @@ proc editTmpFile*(srcs: seq[string], editor, tmpfile: string): seq[string] =
   result = readFile(tmpfile).split("\n")
 
 proc markx(editor = "vi", command: string, args: seq[string]): int =
+  ## markx selects execution targets with editor and executes commands.
   randomize()
 
   let tmpfile = getRandomFile()
