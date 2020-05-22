@@ -1,4 +1,4 @@
-import os, osproc, strutils
+import os, osproc, strutils, random
 
 const
   version = """markx version 1.0.0
@@ -27,8 +27,17 @@ proc readLinesFromStdinOrArgs(args: seq[string]): seq[string] =
   for line in stdin.lines:
     result.add(line)
 
-proc editTmpFile*(srcs: seq[string], editor: string): seq[string] =
-  let tmpfile = getTempDir() / "tmp.txt"
+proc getRandomFile: string =
+  let dir = getTempDir()
+  var filename: string
+  for i in 1..100:
+    let ch = sample(IdentChars)
+    filename.add(ch)
+    let path = dir / filename
+    if not path.existsFile():
+      return path
+
+proc editTmpFile*(srcs: seq[string], editor, tmpfile: string): seq[string] =
   defer: removeFile(tmpfile)
   writeFile(tmpfile, srcs.join("\n"))
 
@@ -36,10 +45,17 @@ proc editTmpFile*(srcs: seq[string], editor: string): seq[string] =
   result = readFile(tmpfile).split("\n")
 
 proc markx(editor = "vi", command: string, args: seq[string]): int =
+  randomize()
+
+  let tmpfile = getRandomFile()
+  if tmpfile == "":
+    stderr.writeLine("markx: couldn't create tmp file. please retry.")
+    return
+
   let
     editor = getEnv("EDITOR", default = editor)
     lines = readLinesFromStdinOrArgs(args)
-    marked = editTmpFile(lines, editor)
+    marked = editTmpFile(lines, editor, tmpfile)
   execMarked(marked, lines, command)
 
 when isMainModule and not defined modeTest:
