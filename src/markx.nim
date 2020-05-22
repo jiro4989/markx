@@ -6,6 +6,7 @@ Copyright (c) 2020 jiro4989
 Released under the MIT License.
 https://github.com/jiro4989/markx"""
 
+
 proc filterMarkedLines(marked, srcs: openArray[string]): seq[string] =
   for i, markedLine in marked:
     if srcs.len <= i: return
@@ -51,6 +52,25 @@ proc markx(editor = "vi", command: string, args: seq[string]): int =
   if tmpfile == "":
     stderr.writeLine("markx: couldn't create tmp file. please retry.")
     return
+
+  var
+    tty =
+      when defined windows:
+        {.fatal "windows not supported".}
+      elif not defined modeTest:
+        open("/dev/tty", fmReadWrite)
+      else:
+        stdout
+    oldStdin = stdin
+    oldStdout = stdout
+
+  stdin = tty
+  stdout = tty
+
+  defer:
+    tty.close()
+    stdin = oldStdin
+    stdout = oldStdout
 
   let
     editor = getEnv("EDITOR", default = editor)
