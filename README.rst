@@ -59,6 +59,10 @@ Installation
 
    $ nimble install -Y markx
 
+or
+
+Download from `Releases <https://github.com/jiro4989/markx/releases>`_
+
 LICENSE
 =======
 
