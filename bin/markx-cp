@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -eu
+
+if [ $# -lt 1 ]; then
+  echo 'markx-cp: must need $1 (dest directory).'
+  exit 1
+fi
+
+readonly DST_DIR="${@:$#:1}"
+markx -c "cp -r {} $DST_DIR" ${@:0:$#}
