@@ -1,7 +1,7 @@
 import os, osproc, strutils, random
 
 const
-  version = """markx version 1.0.0
+  version = """markx version 1.0.1
 Copyright (c) 2020 jiro4989
 Released under the MIT License.
 https://github.com/jiro4989/markx"""
