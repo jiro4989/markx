@@ -74,4 +74,4 @@ MIT
    :target: https://nimble.directory/ci/badges/markx/nimdevel/output.html
 .. |nimble-install| image:: https://nimble.directory/ci/badges/markx/nimdevel/status.svg
    :target: https://nimble.directory/ci/badges/markx/nimdevel/output.html
-.. |demo_1| image:: ./docs/demo_1.gif
+.. |demo_1| image:: https://user-images.githubusercontent.com/13825004/83327532-8efece80-a2b7-11ea-8ceb-9825103fb9c9.gif
