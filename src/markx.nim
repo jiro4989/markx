@@ -1,7 +1,7 @@
 import os, osproc, strutils, random
 
 const
-  version = """markx version 1.0.1
+  version = """markx version 1.0.2
 Copyright (c) 2020 jiro4989
 Released under the MIT License.
 https://github.com/jiro4989/markx"""
@@ -44,7 +44,15 @@ proc editTmpFile*(srcs: seq[string], editor, tmpfile: string): seq[string] =
   discard execCmd(editor & " " & tmpfile)
   result = readFile(tmpfile).split("\n")
 
-proc markx(editor = "vi", command: string, args: seq[string]): int =
+func getEditor(editor, envEditor: string): string =
+  const defaultEditor = "vi"
+  let editor =
+    if editor != "": editor
+    elif envEditor != "": envEditor
+    else: defaultEditor
+  return editor
+
+proc markx(editor = "", command: string, args: seq[string]): int =
   ## markx selects execution targets with editor and executes commands.
   randomize()
 
@@ -53,8 +61,10 @@ proc markx(editor = "vi", command: string, args: seq[string]): int =
     stderr.writeLine("markx: couldn't create tmp file. please retry.")
     return
 
+  let envEditor = getEnv("EDITOR")
+  let editor = getEditor(editor, envEditor)
+
   let
-    editor = getEnv("EDITOR", default = editor)
     lines = readLinesFromStdinOrArgs(args)
     marked = editTmpFile(lines, editor, tmpfile)
   execMarked(marked, lines, command)

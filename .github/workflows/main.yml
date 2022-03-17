@@ -31,7 +31,7 @@ jobs:
           - macOS-latest
     needs: before
     env:
-      NIM_VERSION: 1.2.0
+      NIM_VERSION: stable
     steps:
       - uses: actions/checkout@v1
       - name: Cache nimble
