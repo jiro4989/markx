@@ -1,4 +1,4 @@
-import unittest
+import std/unittest
 
 include markx
 
@@ -45,3 +45,13 @@ suite "filterMarkedLines":
       want: seq[string] = @["a", "b", "c"]
       got = filterMarkedLines(m, s)
     check want == got
+
+suite "getEditor":
+  test "use editor":
+    check "nvim" == getEditor("nvim", "")
+  test "use envEditor":
+    check "nvim" == getEditor("", "nvim")
+  test "use defaultEditor":
+    check "vi" == getEditor("", "")
+  test "use editor":
+    check "nvim" == getEditor("nvim", "nano")
